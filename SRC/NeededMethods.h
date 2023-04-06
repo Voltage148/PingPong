@@ -60,14 +60,12 @@ void Methods::SetTextColor(int Color_Number = 2)
 void Methods::HideCursor(bool flag = true)
 {
 
-    CONSOLE_CURSOR_INFO         CursorInfo;
-    HANDLE                      Data = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO CursorInfo;
+    HANDLE Data = GetStdHandle(STD_OUTPUT_HANDLE);
 
     GetConsoleCursorInfo(Data, &CursorInfo);
     CursorInfo.bVisible = flag;
     SetConsoleCursorInfo(Data, &CursorInfo);
     return;
 }
-
-
 #endif

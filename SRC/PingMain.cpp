@@ -12,6 +12,7 @@
 
 
 #include "NeededMethods.h"
+#include "Ground.h"
 using namespace std;
 
 //Start of main method:
@@ -24,7 +25,7 @@ int main(int argc, char** arvg)
 
     //Define the Objects:
 
-    
+    Ground PlayGround;
     
 //==================================Start Main Game======================
 
@@ -37,7 +38,7 @@ int main(int argc, char** arvg)
 
     //PlayGround:
 
-
+    
 
     //Main Loop:
 
