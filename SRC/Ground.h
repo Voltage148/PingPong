@@ -31,7 +31,7 @@ class Ground
         void ShowInfos(int HP, int Movements);
 
         //When You lose, this method loaded:
-        void LoseMenu(int, int, int);
+        void LoseAndWinMenu(int, int, int, bool*, string);
 
         //When you win the game, this method shows the menu:
         void WinMenu(int ,int ,int);
@@ -99,7 +99,7 @@ void Ground::ShowInfos(int HP, int Movements)
     return;
 }
 
-void Ground::LoseMenu(int Time, int Movements, int Score)
+void Ground::LoseAndWinMenu(int Time, int Movements, int Score, bool *Game, string EndText)
 {
     //Clear the Screen:
     system("cls");
@@ -124,7 +124,7 @@ void Ground::LoseMenu(int Time, int Movements, int Score)
         }
     }
 
-    Methods::SetTextColor(7);       Methods::SetCursor(85, 11);     cout << "\"GAME OVER\"";
+    Methods::SetTextColor(7);       Methods::SetCursor(80, 11);     cout << EndText;
     Methods::SetTextColor(2);       Methods::SetCursor(62, 13);     cout << "Score:" << Score << "\t\t" << "Move:" << Movements << "\t\t" << "Time : " << Time;
     Methods::SetTextColor(5);       Methods::SetCursor(62, 15);     cout << "1 -> Play Again Game";
     Methods::SetCursor(62, 17);            cout << "2 -> Exit From Game";
@@ -135,12 +135,13 @@ void Ground::LoseMenu(int Time, int Movements, int Score)
     {
         case '1':
         case '!':
-
+            *Game = true;
             break;
 
         case '2':
         case '@':
-            system("cls");  system("color");
+            system("cls && color && exit");
+            Methods::FullScreen(false);
             return;
             break;
     }
@@ -148,9 +149,5 @@ void Ground::LoseMenu(int Time, int Movements, int Score)
     return;
 }
 
-void Ground::WinMenu(int Time   ,   int Movements   ,   int Score)
-{
-    return;
-}
 
 #endif

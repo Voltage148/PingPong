@@ -25,7 +25,7 @@ int main(int argc, char** arvg)
 
     //Define the Objects:
 
-    Ground PlayGround;
+    Ground PlayGround;      
     
 //==================================Start Main Game======================
 
@@ -40,6 +40,7 @@ int main(int argc, char** arvg)
 
     PlayGround.DrawGround(true);
     PlayGround.ShowInfos(PlayerHP, PlayersMovement);
+
 
     //Main Loop:
 
