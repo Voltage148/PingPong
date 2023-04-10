@@ -13,6 +13,7 @@
 
 #include "NeededMethods.h"
 #include "Ground.h"
+#include "Players.h"
 using namespace std;
 
 //Start of main method:
@@ -25,7 +26,7 @@ int main(int argc, char** arvg)
 
     //Define the Objects:
 
-    Ground PlayGround;      
+    Ground PlayGround;      Player GamePlayer("Red" ,   PlayGround.HighetCopy); //Red is default color
     
 //==================================Start Main Game======================
 

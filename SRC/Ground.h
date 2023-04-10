@@ -19,6 +19,8 @@ class Ground
 {
     public:
 
+        int HighetCopy = Highet;
+
         //Constructor:
         Ground(){system("cls");     system("color 04");}
 
