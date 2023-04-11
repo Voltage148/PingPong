@@ -25,7 +25,7 @@ class Player
 {
     public:
         //Constructor:
-        Player(string Color, int GroundHighet)
+        Player(string Color, int GroundHighet, int GroundWidth)
         {
             //Convert Color to Number:
             switch(Color[0])
@@ -64,15 +64,15 @@ class Player
             }
 
             //Set Player Start Drawing Place:
-            StartPlace = (GroundHighet / 2) - 3;
-
+            StartPlace = (29 / 2) - 3 + 7;
+            StartWidth = 134;
         }
 
 
         //Define Methods:
 
         //That draws the player Body in ground:
-        void DrawBody(void);
+        void DrawBody(bool);
 
         //That controls keyboard input for Player Movement:
         void ControlInput(void);
@@ -86,11 +86,35 @@ class Player
         const int Length = 7;   const int Width = 2;
 
         //They are unknown Vars (set by constructor when program running ):
-        int ColorNumber = 0;    int StartPlace = 0;
+        int ColorNumber = 0;    int StartPlace = 0;     int StartWidth = 0;
 
         //The Header is so important:
         int Header = 0;
 
 };
+
+void Player::DrawBody(bool flag)
+{
+
+    //Start Drawing Body:
+    //Set Color:
+    Methods::SetTextColor(ColorNumber);
+
+    //Draw Process:
+    for(int index = 0   ;   index < Length   ;   index++)
+    {
+        for(int Counter = 0     ;   Counter < 2    ;   Counter++)
+        {
+            Methods::SetCursor(StartWidth + Counter, StartPlace + index);
+
+            //Draw Player on Screen:
+            if(flag == true){   cout << (char)219;  }
+
+            //Remove player on Screen:
+            else{   cout << ' ';    }
+        }
+    }
+    return;
+}
 
 #endif

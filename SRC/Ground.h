@@ -19,7 +19,7 @@ class Ground
 {
     public:
 
-        int HighetCopy = Highet;
+        int HighetCopy = Highet + Vertical_Start + Highet_Thickness;    int WidthCopy = Width + Horizontal_Start + Width_Thickness;
 
         //Constructor:
         Ground(){system("cls");     system("color 04");}

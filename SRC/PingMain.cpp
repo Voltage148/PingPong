@@ -26,7 +26,7 @@ int main(int argc, char** arvg)
 
     //Define the Objects:
 
-    Ground PlayGround;      Player GamePlayer("Red" ,   PlayGround.HighetCopy); //Red is default color
+    Ground PlayGround;      Player GamePlayer("Green" ,   PlayGround.HighetCopy,  PlayGround.WidthCopy); //Red is default color
     
 //==================================Start Main Game======================
 
@@ -37,14 +37,16 @@ int main(int argc, char** arvg)
     Methods::HideScrollBar(true);       Sleep(12);
     Methods::HideCursor(false);
 
-    //PlayGround:
 
     PlayGround.DrawGround(true);
     PlayGround.ShowInfos(PlayerHP, PlayersMovement);
+    GamePlayer.DrawBody(true);
 
 
     //Main Loop:
 
 
+
     return 0;
 }
+
