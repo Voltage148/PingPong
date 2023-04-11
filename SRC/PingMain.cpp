@@ -16,17 +16,21 @@
 #include "Players.h"
 using namespace std;
 
+//Define the exit function:
+
+int KillGame(bool);
+
 //Start of main method:
 int main(int argc, char** arvg)
 {
     //The Code:
 
     //Define the base vars:
-    int PlayerHP = 5;   int Score = 0;  int Time = 0;   int PlayersMovement = 0;    bool Game = true; //Game is the important var in the program;
+    int PlayerHP = 5;   int Score = 0;  int Time = 0;   int PlayersMovement = 0;      bool Game = true; //Game is the important var in the program;
 
     //Define the Objects:
 
-    Ground PlayGround;      Player GamePlayer("Green" ,   PlayGround.HighetCopy,  PlayGround.WidthCopy); //Red is default color
+    Ground PlayGround;      Player GamePlayer("Yellow" ,   PlayGround.HighetCopy,  PlayGround.WidthCopy); //Red is default color
     
 //==================================Start Main Game======================
 
@@ -45,8 +49,33 @@ int main(int argc, char** arvg)
 
     //Main Loop:
 
+    while(Game == true)
+    {
+        GamePlayer.ControlInput(&Game);
+        GamePlayer.Movement(&PlayersMovement);
+    }
 
-
+    //Exit of game:
+    KillGame(true);
     return 0;
 }
 
+int KillGame(bool flag)
+{
+    if(flag == true)
+    {
+        //Set Default color:
+        system("color");
+
+        //Clear Screen:
+        system("cls");
+
+        //Normalize Screen:
+        Methods::FullScreen(false);
+
+        //Show console Cursor:
+        Methods::HideCursor(true);
+        return 0;
+    }
+    return 1;
+}

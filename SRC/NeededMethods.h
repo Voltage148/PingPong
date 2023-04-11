@@ -40,7 +40,7 @@ void Methods::FullScreen(bool flag = true)
     else
     {
         SendMessage(GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
-        system("mode con COLS=200");
+        system("mode con COLS=100");
     }
     return;
 }

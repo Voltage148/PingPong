@@ -75,10 +75,10 @@ class Player
         void DrawBody(bool);
 
         //That controls keyboard input for Player Movement:
-        void ControlInput(void);
+        void ControlInput(bool*);
 
         //That Controls Player Movements EZ:
-        void Movement(void);
+        void Movement(int*);
 
     private:
 
@@ -90,6 +90,9 @@ class Player
 
         //The Header is so important:
         int Header = 0;
+
+        //Movement Enum:
+        enum Event{UP,  DOWN,   PAUSE,  PROGRAMMER_MODE};       Event MovementKey;
 
 };
 
@@ -113,6 +116,124 @@ void Player::DrawBody(bool flag)
             //Remove player on Screen:
             else{   cout << ' ';    }
         }
+    }
+    return;
+}
+
+void Player::ControlInput(bool* Game)
+{
+
+    if(!kbhit())
+    {
+        //get input from keyboard:
+        switch(getch())
+        {
+            case 'W':
+            case 'w':
+                MovementKey = UP;
+                break;
+
+            case 'S':
+            case 's':
+                MovementKey = DOWN;
+                break;
+
+            case 'E':
+            case 'e':
+                *Game = false;
+                break;
+
+            case 'P':
+            case 'p':
+                MovementKey = PAUSE;
+                break;
+
+            case 'X':
+            case 'x':
+                MovementKey = PROGRAMMER_MODE;
+                break;
+        }
+    }
+    return;
+}
+
+void Player::Movement(int* MovementsNumber)
+{
+    Methods::SetTextColor(ColorNumber);
+
+    switch(MovementKey)
+    {
+        case UP:
+
+            //Move Player UP:
+            if(StartPlace > 9)
+            {
+                //Clear the old Player Body:
+                for (int index = 0; index < Length; index++)
+                {
+                    for (int Counter = 0; Counter < 2; Counter++)
+                    {
+                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
+                        cout << ' ';
+                    }
+                }
+
+
+                //Update the Body Coordinate:
+                StartPlace -= 1;
+
+                //Draw new body:
+                for (int index = 0; index < Length; index++)
+                {
+                    for (int Counter = 0; Counter < 2; Counter++)
+                    {
+                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
+                        cout << (char) 219;
+                    }
+                }
+                *MovementsNumber += 1;
+            }
+
+            break;
+
+
+
+        case DOWN:
+
+            //Move Player UP:
+            if(StartPlace < 27)
+            {
+                for (int index = 0; index < Length; index++)
+                {
+                    for (int Counter = 0; Counter < 2; Counter++)
+                    {
+                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
+                        cout << ' ';
+                    }
+                }
+
+                StartPlace += 1;
+
+                for (int index = 0; index < Length; index++)
+                {
+                    for (int Counter = 0; Counter < 2; Counter++)
+                    {
+                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
+                        cout << (char) 219;
+                    }
+                }
+                *MovementsNumber += 1;
+            }
+
+            break;
+
+
+
+        case PROGRAMMER_MODE:
+
+            //That's nothing to do but i'll use it for control on my developing process:
+
+            break;
     }
     return;
 }
