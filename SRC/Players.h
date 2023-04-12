@@ -68,6 +68,7 @@ class Player
             //Set Player Start Drawing Place:
             StartPlace = Highet;
             StartWidth = Width;
+
         }
 
 
@@ -77,7 +78,7 @@ class Player
         void DrawBody(bool);
 
         //That controls input and movement:
-        void ControlInput_Movement(bool*);
+        void ControlMovement(char);
 
 
     private:
@@ -87,6 +88,7 @@ class Player
 
         //They are unknown Vars (set by constructor when program running ):
         int ColorNumber = 0;    int StartPlace = 0;     int StartWidth = 0;
+
 
 };
 
@@ -114,18 +116,14 @@ void Player::DrawBody(bool flag)
     return;
 }
 
-void Player::ControlInput_Movement(bool* Game)
+void Player::ControlMovement(char Coord)
 {
     //Set the player color:
     Methods::SetTextColor(ColorNumber);
-
-    if(!kbhit())
+    switch(Coord)
     {
-        //get input from keyboard:
-        switch(getch())
-        {
-            case 'W':
-            case 'w':
+                //if coord is UP:
+            case 'U':
                 //Player body limit
                 if(StartPlace > 9)
                 {
@@ -141,10 +139,8 @@ void Player::ControlInput_Movement(bool* Game)
                     for (int Counter = 0; Counter < 2; Counter++) { cout << (char) 219; }
                 }
                 break;
-
-            case 'S':
-            case 's':
-
+                //if Player Down:
+            case 'D':
                 //Player body limit
                 if(StartPlace < 27)
                 {
@@ -160,23 +156,7 @@ void Player::ControlInput_Movement(bool* Game)
                     for (int Counter = 0; Counter < 2; Counter++) { cout << (char) 219; }
                 }
                 break;
-
-            case 'E':
-            case 'e':
-                *Game = false;
-                break;
-
-
-            case 'X':
-            case 'x':
-                //nothing to do for now
-                break;
-        }
     }
     return;
 }
-
-
-
-
 #endif

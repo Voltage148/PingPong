@@ -91,10 +91,10 @@ void Ground::ShowInfos(int PlayerHP,    int ComputerHP,  int Score)
 
     Methods::SetTextColor(6);
 
-    cout << "PlayerHP:";    for(int counter = 0 ; counter < PlayerHP ; counter ++){cout << (char)3 << ' ';}
+    cout << "Player1 HP:";    for(int counter = 0 ; counter < PlayerHP ; counter ++){cout << (char)3 << ' ';}
     cout << "\t\tScore:" << Score << "/113";
     cout << "\t\t";
-    cout << "ComputerHP:";  for(int Counter = 0 ; Counter < ComputerHP ; Counter++){cout << (char)3 << ' ';}
+    cout << "Player2 HP:";  for(int Counter = 0 ; Counter < ComputerHP ; Counter++){cout << (char)3 << ' ';}
 
     return;
 }
