@@ -25,7 +25,7 @@ class Player
 {
     public:
         //Constructor:
-        Player(string Color, int GroundHighet, int GroundWidth)
+        Player(string Color, int Width, int Highet)
         {
             //Convert Color to Number:
             switch(Color[0])
@@ -60,12 +60,14 @@ class Player
                     ColorNumber = 5;
                     break;
 
-
+                default:
+                    ColorNumber = 7;
+                    break;
             }
 
             //Set Player Start Drawing Place:
-            StartPlace = (29 / 2) - 3 + 7;
-            StartWidth = 134;
+            StartPlace = Highet;
+            StartWidth = Width;
         }
 
 
@@ -74,11 +76,9 @@ class Player
         //That draws the player Body in ground:
         void DrawBody(bool);
 
-        //That controls keyboard input for Player Movement:
-        void ControlInput(bool*);
+        //That controls input and movement:
+        void ControlInput_Movement(bool*);
 
-        //That Controls Player Movements EZ:
-        void Movement(int*);
 
     private:
 
@@ -87,12 +87,6 @@ class Player
 
         //They are unknown Vars (set by constructor when program running ):
         int ColorNumber = 0;    int StartPlace = 0;     int StartWidth = 0;
-
-        //The Header is so important:
-        int Header = 0;
-
-        //Movement Enum:
-        enum Event{UP,  DOWN,   PAUSE,  PROGRAMMER_MODE};       Event MovementKey;
 
 };
 
@@ -120,8 +114,10 @@ void Player::DrawBody(bool flag)
     return;
 }
 
-void Player::ControlInput(bool* Game)
+void Player::ControlInput_Movement(bool* Game)
 {
+    //Set the player color:
+    Methods::SetTextColor(ColorNumber);
 
     if(!kbhit())
     {
@@ -130,12 +126,39 @@ void Player::ControlInput(bool* Game)
         {
             case 'W':
             case 'w':
-                MovementKey = UP;
+                //Player body limit
+                if(StartPlace > 9)
+                {
+                    //Go to Player bottom  and clear:
+                    Methods::SetCursor(StartWidth, StartPlace + Length - 1);
+                    for (int Counter = 0; Counter < 2; Counter++) { cout << ' '; }
+
+                    //Update Value
+                    StartPlace--;
+
+                    //Go to Player top and draw:
+                    Methods::SetCursor(StartWidth, StartPlace);
+                    for (int Counter = 0; Counter < 2; Counter++) { cout << (char) 219; }
+                }
                 break;
 
             case 'S':
             case 's':
-                MovementKey = DOWN;
+
+                //Player body limit
+                if(StartPlace < 27)
+                {
+                    //Go to Player Top and clear:
+                    Methods::SetCursor(StartWidth, StartPlace);
+                    for (int Counter = 0; Counter < 2; Counter++) { cout << ' '; }
+
+                    //Update value:
+                    StartPlace++;
+
+                    //Go to Player bottom and Draw:
+                    Methods::SetCursor(StartWidth, StartPlace + Length - 1);
+                    for (int Counter = 0; Counter < 2; Counter++) { cout << (char) 219; }
+                }
                 break;
 
             case 'E':
@@ -143,99 +166,17 @@ void Player::ControlInput(bool* Game)
                 *Game = false;
                 break;
 
-            case 'P':
-            case 'p':
-                MovementKey = PAUSE;
-                break;
 
             case 'X':
             case 'x':
-                MovementKey = PROGRAMMER_MODE;
+                //nothing to do for now
                 break;
         }
     }
     return;
 }
 
-void Player::Movement(int* MovementsNumber)
-{
-    Methods::SetTextColor(ColorNumber);
-
-    switch(MovementKey)
-    {
-        case UP:
-
-            //Move Player UP:
-            if(StartPlace > 9)
-            {
-                //Clear the old Player Body:
-                for (int index = 0; index < Length; index++)
-                {
-                    for (int Counter = 0; Counter < 2; Counter++)
-                    {
-                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
-                        cout << ' ';
-                    }
-                }
 
 
-                //Update the Body Coordinate:
-                StartPlace -= 1;
-
-                //Draw new body:
-                for (int index = 0; index < Length; index++)
-                {
-                    for (int Counter = 0; Counter < 2; Counter++)
-                    {
-                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
-                        cout << (char) 219;
-                    }
-                }
-                *MovementsNumber += 1;
-            }
-
-            break;
-
-
-
-        case DOWN:
-
-            //Move Player UP:
-            if(StartPlace < 27)
-            {
-                for (int index = 0; index < Length; index++)
-                {
-                    for (int Counter = 0; Counter < 2; Counter++)
-                    {
-                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
-                        cout << ' ';
-                    }
-                }
-
-                StartPlace += 1;
-
-                for (int index = 0; index < Length; index++)
-                {
-                    for (int Counter = 0; Counter < 2; Counter++)
-                    {
-                        Methods::SetCursor(StartWidth + Counter, StartPlace + index);
-                        cout << (char) 219;
-                    }
-                }
-                *MovementsNumber += 1;
-            }
-
-            break;
-
-
-
-        case PROGRAMMER_MODE:
-
-            //That's nothing to do but i'll use it for control on my developing process:
-
-            break;
-    }
-    return;
-}
 
 #endif

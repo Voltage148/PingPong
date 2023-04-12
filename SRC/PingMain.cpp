@@ -14,6 +14,7 @@
 #include "NeededMethods.h"
 #include "Ground.h"
 #include "Players.h"
+#include "Rocket.h"
 using namespace std;
 
 //Define the exit function:
@@ -26,11 +27,13 @@ int main(int argc, char** arvg)
     //The Code:
 
     //Define the base vars:
-    int PlayerHP = 5;   int Score = 0;  int Time = 0;   int PlayersMovement = 0;      bool Game = true; //Game is the important var in the program;
+    int PlayerHP = 5;   int ComputerHP = 5;    int Score = 0;    bool Game = true; //Game is the important var in the program;
 
     //Define the Objects:
 
-    Ground PlayGround;      Player GamePlayer("Yellow" ,   PlayGround.HighetCopy,  PlayGround.WidthCopy); //Red is default color
+    Ground PlayGround;
+    Player GamePlayer("Green", 134, (29 / 2) - 3 + 7);
+    Player Computer("Purple", 31, (29 / 2) - 3 + 7);
     
 //==================================Start Main Game======================
 
@@ -43,16 +46,15 @@ int main(int argc, char** arvg)
 
 
     PlayGround.DrawGround(true);
-    PlayGround.ShowInfos(PlayerHP, PlayersMovement);
+    PlayGround.ShowInfos(PlayerHP, ComputerHP, Score);
     GamePlayer.DrawBody(true);
-
+    Computer.DrawBody(true);
 
     //Main Loop:
 
     while(Game == true)
     {
-        GamePlayer.ControlInput(&Game);
-        GamePlayer.Movement(&PlayersMovement);
+        GamePlayer.ControlInput_Movement(&Game);
     }
 
     //Exit of game:

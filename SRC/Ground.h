@@ -19,8 +19,6 @@ class Ground
 {
     public:
 
-        int HighetCopy = Highet + Vertical_Start + Highet_Thickness;    int WidthCopy = Width + Horizontal_Start + Width_Thickness;
-
         //Constructor:
         Ground(){system("cls");     system("color 04");}
 
@@ -30,7 +28,7 @@ class Ground
         void DrawGround(bool flag);
 
         //The Methods shows Game Status:
-        void ShowInfos(int HP, int Movements);
+        void ShowInfos(int , int , int);
 
         //When You lose, this method loaded:
         void LoseAndWinMenu(int, int, int, bool*, string);
@@ -82,7 +80,7 @@ void Ground::DrawGround(bool flag  = true)
 }
 
 
-void Ground::ShowInfos(int HP, int Movements)
+void Ground::ShowInfos(int PlayerHP,    int ComputerHP,  int Score)
 {
     int HighetShowInfos = Highet + Vertical_Start + 3;
 
@@ -93,10 +91,10 @@ void Ground::ShowInfos(int HP, int Movements)
 
     Methods::SetTextColor(6);
 
-    cout << "HP:";    for(int counter = 0 ; counter < HP ; counter ++){cout << (char)3 << ' ';}
-    cout << "\t\tTime:";
-    cout << "\t\tMovement:" << Movements;
-    cout << "\t\tPlayer VS Computer";
+    cout << "PlayerHP:";    for(int counter = 0 ; counter < PlayerHP ; counter ++){cout << (char)3 << ' ';}
+    cout << "\t\tScore:" << Score << "/113";
+    cout << "\t\t";
+    cout << "ComputerHP:";  for(int Counter = 0 ; Counter < ComputerHP ; Counter++){cout << (char)3 << ' ';}
 
     return;
 }
