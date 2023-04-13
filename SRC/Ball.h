@@ -226,7 +226,7 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *Score)
     else if(MainWidth == 137)
     {
         *Player1HP -= 1;
-        GroundOb.ShowInfos(*Player1HP, *Player2HP, 10);
+        GroundOb.ShowInfos(*Player1HP, *Player2HP, *Score);
         Sleep(1000);
 
         Methods::SetCursor(MainWidth, MainHigh);    cout << ' ';

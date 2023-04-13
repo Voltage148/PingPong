@@ -80,7 +80,7 @@ void Ground::DrawGround(bool flag  = true)
 }
 
 
-void Ground::ShowInfos(int PlayerHP,    int ComputerHP,  int Score)
+void Ground::ShowInfos(int Player1HP,    int Player2HP,  int Score)
 {
     int HighetShowInfos = Highet + Vertical_Start + 3;
 
@@ -91,10 +91,10 @@ void Ground::ShowInfos(int PlayerHP,    int ComputerHP,  int Score)
 
     Methods::SetTextColor(6);
 
-    cout << "Player1 HP:";    for(int counter = 0 ; counter < PlayerHP ; counter ++){cout << (char)3 << ' ';}
+    cout << "Player1 HP:";    for(int counter = 0 ; counter < Player1HP ; counter ++){cout << (char)3 << ' ';}
     cout << "\t\tScore:" << Score << "/113";
     cout << "\t\t";
-    cout << "Player2 HP:";  for(int Counter = 0 ; Counter < ComputerHP ; Counter++){cout << (char)3 << ' ';}
+    cout << "Player2 HP:";  for(int Counter = 0 ; Counter < Player2HP ; Counter++){cout << (char)3 << ' ';}
 
     return;
 }

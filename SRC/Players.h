@@ -24,7 +24,9 @@ using namespace std;
 class Player
 {
     public:
+
         //Constructor:
+
         Player(string Color, int Width, int Highet)
         {
             //Convert Color to Number:
@@ -157,6 +159,8 @@ void Player::ControlMovement(char Coord)
                 }
                 break;
     }
+
+
     return;
 }
 #endif

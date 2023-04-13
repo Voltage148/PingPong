@@ -72,7 +72,7 @@ int main(int argc, char** arvg)
         //Ball Logic and movement:
 
         GameBall.BallMovement();
-        GameBall.Logic(&Player1HP,      &Player2HP,     &Score);
+        GameBall.Logic(&Player1HP,      &Player2HP,     &Score, );
 
         //Players Logic:
 
