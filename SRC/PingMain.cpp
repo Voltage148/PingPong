@@ -14,6 +14,7 @@
 #include "NeededMethods.h"
 #include "Ground.h"
 #include "Players.h"
+#include "Ball.h"
 using namespace std;
 
 //Define the exit function:
@@ -26,7 +27,7 @@ int main(int argc, char** arvg)
     //The Code:
 
     //Define the base vars:
-    int Player1HP = 3;   int Player2HP = 3;    int Score = 0;    bool Game = true; //Game is the important var in the program;
+    int Player1HP = 3;   int Player2HP = 3;    int Score = 0;   string Winner = "Nobody";    bool Game = true; //Game is the important var in the program;
 
     //Colors:
     string ColorPlayer1 = "Green";      string ColorPlayer2 = "Purple";
@@ -36,7 +37,7 @@ int main(int argc, char** arvg)
     Ground PlayGround;
     Player GamePlayer1(ColorPlayer1, 134, (29 / 2) - 3 + 7);
     Player GamePlayer2(ColorPlayer2, 31, (29 / 2) - 3 + 7);
-    
+    Ball GameBall("Yellow", 117, 29);
 //==================================Start Main Game======================
 
     //Showing the ground and set the window:
@@ -51,7 +52,7 @@ int main(int argc, char** arvg)
     PlayGround.ShowInfos(Player1HP, Player2HP, Score);
     GamePlayer1.DrawBody(true);
     GamePlayer2.DrawBody(true);
-
+    GameBall.DrawBall(true);
     //Main Loop:
 
     while(Game == true)
@@ -70,11 +71,25 @@ int main(int argc, char** arvg)
 
         //Ball Logic and movement:
 
-        
+        GameBall.BallMovement();
+        GameBall.Logic(&Player1HP,      &Player2HP,     &Score);
 
+        //Players Logic:
+
+        if(Player1HP == 0)
+        {
+            Winner = "Player2";
+            Game = false;
+        }
+
+        else if(Player2HP == 0)
+        {
+            Winner = "Player1";
+            Game = false;
+        }
 
         //wait:
-        Sleep(50);
+        Sleep(70);
     }
 
     //Exit of game:
