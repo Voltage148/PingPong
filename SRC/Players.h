@@ -25,6 +25,7 @@ class Player
 {
     public:
 
+
         //Constructor:
 
         Player(string Color, int Width, int Highet)
@@ -73,6 +74,7 @@ class Player
 
         }
 
+        int StartPlace = 0;     int StartWidth = 0;
 
         //Define Methods:
 
@@ -89,7 +91,7 @@ class Player
         const int Length = 7;   const int Width = 2;
 
         //They are unknown Vars (set by constructor when program running ):
-        int ColorNumber = 0;    int StartPlace = 0;     int StartWidth = 0;
+        int ColorNumber = 0;
 
 
 };

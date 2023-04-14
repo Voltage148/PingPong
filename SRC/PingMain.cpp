@@ -22,21 +22,22 @@ using namespace std;
 int KillGame();
 
 //Start of main method:
-int main(int argc, char** arvg)
+int main(void)
 {
     //The Code:
 
     //Define the base vars:
-    int Player1HP = 3;   int Player2HP = 3;    int Score = 0;   string Winner = "Nobody";    bool Game = true; //Game is the important var in the program;
-
+    int Player1HP = 3;   int Player2HP = 3;    int ScorePlayer1 = 0;    int ScorePlayer2 = 0;  string Winner = "Nobody";    bool Game = true; //Game is the important var in the program;
+    int Time = 50;
     //Colors:
-    string ColorPlayer1 = "Green";      string ColorPlayer2 = "Purple";
+    string ColorPlayer1 = "Green";      string ColorPlayer2 = "Blue";
 
     //Define the Objects:
 
     Ground PlayGround;
     Player GamePlayer1(ColorPlayer1, 134, (29 / 2) - 3 + 7);
     Player GamePlayer2(ColorPlayer2, 31, (29 / 2) - 3 + 7);
+
     Ball GameBall("Yellow", 117, 29);
 //==================================Start Main Game======================
 
@@ -49,11 +50,12 @@ int main(int argc, char** arvg)
 
 
     PlayGround.DrawGround(true);
-    PlayGround.ShowInfos(Player1HP, Player2HP, Score);
+    PlayGround.ShowInfos(Player1HP, Player2HP, 0, 0);
     GamePlayer1.DrawBody(true);
     GamePlayer2.DrawBody(true);
     GameBall.DrawBall(true);
     //Main Loop:
+
 
     while(Game == true)
     {
@@ -67,12 +69,20 @@ int main(int argc, char** arvg)
 
         else if(GetAsyncKeyState(0x4A)){     GamePlayer2.ControlMovement('D');}//Move Player 2 to Down (check if press 'J')
 
+        //that will remove:
+        else if(GetAsyncKeyState(VK_CONTROL)){     Time -= 2;}
+
         else if(GetAsyncKeyState(0x45)){           Game = false;}
 
         //Ball Logic and movement:
 
         GameBall.BallMovement();
-        GameBall.Logic(&Player1HP,      &Player2HP,     &Score, );
+        GameBall.Logic(&Player1HP,
+                       &Player2HP,
+                       &ScorePlayer1,
+                       &ScorePlayer2,
+                       GamePlayer1.StartPlace,
+                       GamePlayer2.StartPlace);
 
         //Players Logic:
 
@@ -89,7 +99,7 @@ int main(int argc, char** arvg)
         }
 
         //wait:
-        Sleep(70);
+        Sleep(Time);
     }
 
     //Exit of game:

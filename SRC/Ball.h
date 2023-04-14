@@ -83,6 +83,7 @@ public:
     }
 
     //define Methods:
+
     //that draws the ball:
     void DrawBall(bool);
 
@@ -90,7 +91,7 @@ public:
     void BallMovement(void);
 
     //that controls the ball logic(Score & ball direction):
-    void Logic(int*, int *, int *);
+    void Logic(int*, int *, int *, int *, int, int);
 
 
 private:
@@ -111,19 +112,10 @@ void Ball::DrawBall(bool flag)
 {
     //SetColor:
     Methods::SetTextColor(ColorNumber);
-    if(flag == true)
-    {
-        //Print Ball:
-        Methods::SetCursor(MainWidth, MainHigh);
-        cout << (char)219;
-    }
+    //Print Ball:
+    Methods::SetCursor(MainWidth, MainHigh);
 
-    else
-    {
-        //Print Ball:
-        Methods::SetCursor(MainWidth, MainHigh);
-        cout << ' ';
-    }
+    if(flag == true){cout << (char)219;}    else{cout << ' ';}
     return;
 }
 
@@ -191,48 +183,136 @@ void Ball::BallMovement(void)
     return;
 }
 
-void Ball::Logic(int *Player1HP, int *Player2HP, int *Score)
+void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePlayer2, int HighPlayer1, int HighPlayer2)
 {
     //Thi method controls the Ball logic:
 
     //Control Ball limit:
     if(MainHigh == 33)
     {
-        if(BeforeDirection == SE){BallDirection = NE; }
-
-        else if(BeforeDirection == SW){BallDirection = NW; }
-
+        switch(BeforeDirection)
+        {
+            case SE:    BallDirection = NE;     break;
+            case SW:    BallDirection = NW;     break;
+        }
     }
 
     else if(MainHigh == 9)
     {
-        if(BeforeDirection == NW){BallDirection = SW; }
-
-        else if(BeforeDirection == NE){BallDirection = SE;}
+        switch(BeforeDirection)
+        {
+            case NW:    BallDirection = SW;     break;
+            case NE:    BallDirection = SE;     break;
+        }
     }
+
 
     else if(MainWidth == 29)
     {
         *Player2HP -= 1;
-        GroundOb.ShowInfos(*Player1HP, *Player2HP, 10);
-        Sleep(1000);
+        GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
 
         Methods::SetCursor(MainWidth, MainHigh);    cout << ' ';
+
         Methods::SetCursor(MidWidth, MidHigh);      cout << (char)219;
 
         MainWidth = MidWidth;       MainHigh = MidHigh;
+
+        Sleep(1000);
     }
 
     else if(MainWidth == 137)
     {
         *Player1HP -= 1;
-        GroundOb.ShowInfos(*Player1HP, *Player2HP, *Score);
-        Sleep(1000);
+        GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
 
         Methods::SetCursor(MainWidth, MainHigh);    cout << ' ';
+
         Methods::SetCursor(MidWidth, MidHigh);      cout << (char)219;
 
         MainWidth = MidWidth;       MainHigh = MidHigh;
+
+        Sleep(1000);
+    }
+
+    //Check if the ball hit the player:
+
+    int RandNumber = 0;
+
+    if(MainWidth == 133)
+    {
+        for(int index = 0 ; index < 7 ;  index ++)
+        {
+            if(MainHigh == HighPlayer1 + index)
+            {
+                switch (BeforeDirection)
+                {
+                    case SE:
+                        BallDirection = SW;
+                        break;
+
+                    case E:
+
+                        //Choose a random direction:
+                        srand(time(0));
+                        RandNumber = rand() % (4 - 1) + 1;
+                        switch (RandNumber) {
+                            case 1:
+                                BallDirection = NW;
+                                break;
+                            case 2:
+                                BallDirection = SW;
+                                break;
+                            case 3:
+                                BallDirection = W;
+                                break;
+                        }
+
+                        break;
+
+                    case NE:
+                        BallDirection = NW;
+                        break;
+
+                }
+                *ScorePlayer1 += 1;
+                GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
+                break;
+            }
+
+        }
+    }
+
+    else if(MainWidth == 34)
+    {
+        for(int index = 0 ; index < 7 ;  index ++)
+        {
+            if(MainHigh == HighPlayer2 + index)
+            {
+                switch(BeforeDirection)
+                {
+                    case SW:    BallDirection = SE; break;
+
+                    case W:
+                        //Choose a random direction:
+                        srand(time(0));
+                        RandNumber = rand() % (4 - 1) + 1;
+                        switch(RandNumber)
+                        {
+                            case 1: BallDirection = NE;     break;
+                            case 2: BallDirection = SE;     break;
+                            case 3:BallDirection = E;       break;
+                        }
+
+                        break;
+
+                    case NW:    BallDirection = NE; break;
+                }
+                *ScorePlayer2 +=1;
+                GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
+                break;
+            }
+        }
     }
 
     return;

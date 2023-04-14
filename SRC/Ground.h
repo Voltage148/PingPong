@@ -28,7 +28,7 @@ class Ground
         void DrawGround(bool flag);
 
         //The Methods shows Game Status:
-        void ShowInfos(int , int , int);
+        void ShowInfos(int , int , int, int);
 
         //When You lose, this method loaded:
         void LoseAndWinMenu(int, int, int, bool*, string);
@@ -80,7 +80,7 @@ void Ground::DrawGround(bool flag  = true)
 }
 
 
-void Ground::ShowInfos(int Player1HP,    int Player2HP,  int Score)
+void Ground::ShowInfos(int Player1HP,    int Player2HP,  int ScorePlayer1, int ScorePlayer2)
 {
     int HighetShowInfos = Highet + Vertical_Start + 3;
 
@@ -92,7 +92,7 @@ void Ground::ShowInfos(int Player1HP,    int Player2HP,  int Score)
     Methods::SetTextColor(6);
 
     cout << "Player1 HP:";    for(int counter = 0 ; counter < Player1HP ; counter ++){cout << (char)3 << ' ';}
-    cout << "\t\tScore:" << Score << "/113";
+    cout << "\t\tScore Player1:" << ScorePlayer1 << "\t\t" << "Score Player2:" << ScorePlayer2;
     cout << "\t\t";
     cout << "Player2 HP:";  for(int Counter = 0 ; Counter < Player2HP ; Counter++){cout << (char)3 << ' ';}
 
