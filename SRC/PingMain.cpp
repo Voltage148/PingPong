@@ -9,7 +9,7 @@
 //Import the headers:
 #include <windows.h>
 #include <winuser.h>
-
+#include <conio.h>
 
 #include "NeededMethods.h"
 #include "Ground.h"
@@ -27,10 +27,13 @@ int main(void)
     //The Code:
 
     //Define the base vars:
-    int Player1HP = 3;   int Player2HP = 3;    int ScorePlayer1 = 0;    int ScorePlayer2 = 0;  string Winner = "Nobody";    bool Game = true; //Game is the important var in the program;
+    int Player1HP = 3;   int Player2HP = 3;    int ScorePlayer1 = 0;    int ScorePlayer2 = 0;  string Winner = "Nobody"; int WinnerScore = 0;   bool Game = true; //Game is the important var in the program;
     int Time = 50;
     //Colors:
     string ColorPlayer1 = "Green";      string ColorPlayer2 = "Blue";
+
+    cout << "Enter Player 1 Color:";    cin >> ColorPlayer1;
+    cout << "Enter Player 2 Color:";    cin >> ColorPlayer2;
 
     //Define the Objects:
 
@@ -49,6 +52,7 @@ int main(void)
     Methods::HideCursor(false);
 
 
+    //Draw Ground, Players, and Ball:
     PlayGround.DrawGround(true);
     PlayGround.ShowInfos(Player1HP, Player2HP, 0, 0);
     GamePlayer1.DrawBody(true);
@@ -69,10 +73,7 @@ int main(void)
 
         else if(GetAsyncKeyState(0x4A)){     GamePlayer2.ControlMovement('D');}//Move Player 2 to Down (check if press 'J')
 
-        //that will remove:
-        else if(GetAsyncKeyState(VK_CONTROL)){     Time -= 2;}
-
-        else if(GetAsyncKeyState(0x45)){           Game = false;}
+        else if(GetAsyncKeyState(VK_CONTROL)){  Game = false;}//that exit from game:
 
         //Ball Logic and movement:
 
@@ -86,21 +87,13 @@ int main(void)
 
         //Players Logic:
 
-        if(Player1HP == 0)
-        {
-            Winner = "Player2";
-            Game = false;
-        }
+        if(Player1HP == 0){ Game = false; system("cls"); cout << "Player 2 is Winner!!!\n";     Beep(300, 200); system("pause");}
 
-        else if(Player2HP == 0)
-        {
-            Winner = "Player1";
-            Game = false;
-        }
-
+        else if(Player2HP == 0){ Game = false; system("cls"); cout << "Player 1 is Winner!!!\n";  Beep(300, 200);  system("pause");}
         //wait:
         Sleep(Time);
     }
+
 
     //Exit of game:
     KillGame();

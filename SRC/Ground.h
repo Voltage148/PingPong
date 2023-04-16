@@ -30,12 +30,6 @@ class Ground
         //The Methods shows Game Status:
         void ShowInfos(int , int , int, int);
 
-        //When You lose, this method loaded:
-        void LoseAndWinMenu(int, int, int, bool*, string);
-
-        //When you win the game, this method shows the menu:
-        void WinMenu(int ,int ,int);
-
     private:
 
         //Ground Specifications:
@@ -95,56 +89,6 @@ void Ground::ShowInfos(int Player1HP,    int Player2HP,  int ScorePlayer1, int S
     cout << "\t\tScore Player1:" << ScorePlayer1 << "\t\t" << "Score Player2:" << ScorePlayer2;
     cout << "\t\t";
     cout << "Player2 HP:";  for(int Counter = 0 ; Counter < Player2HP ; Counter++){cout << (char)3 << ' ';}
-
-    return;
-}
-
-void Ground::LoseAndWinMenu(int Time, int Movements, int Score, bool *Game, string EndText)
-{
-    //Clear the Screen:
-    system("cls");
-    Methods::SetTextColor(3);
-
-    int BoxWidth = 47;      int BoxHighet = 12;
-
-    for(int H_Counter = 0 ; H_Counter < BoxHighet ; H_Counter ++)
-    {
-
-        for(int W_Counter = 0 ; W_Counter < BoxWidth ; W_Counter ++)
-        {
-            Methods::SetCursor(60 + W_Counter  ,   10 + H_Counter);
-
-            if(W_Counter >= 2-1   &&  W_Counter <= BoxWidth - 2)
-            {
-                if(H_Counter >= 2-1   &&  H_Counter <= BoxHighet - 2){cout << ' ';}
-
-                else{cout << (char)219;}
-            }
-            else{cout << (char)219;}
-        }
-    }
-
-    Methods::SetTextColor(7);       Methods::SetCursor(80, 11);     cout << EndText;
-    Methods::SetTextColor(2);       Methods::SetCursor(62, 13);     cout << "Score:" << Score << "\t\t" << "Move:" << Movements << "\t\t" << "Time : " << Time;
-    Methods::SetTextColor(5);       Methods::SetCursor(62, 15);     cout << "1 -> Play Again Game";
-    Methods::SetCursor(62, 17);            cout << "2 -> Exit From Game";
-
-    Methods::SetTextColor(7);   Methods::SetCursor(1, 20);      cout << "Input:";   char Get = 'N' ;    cin >> Get;
-
-    switch(Get)
-    {
-        case '1':
-        case '!':
-            *Game = true;
-            break;
-
-        case '2':
-        case '@':
-            system("cls && color && exit");
-            Methods::FullScreen(false);
-            return;
-            break;
-    }
 
     return;
 }
