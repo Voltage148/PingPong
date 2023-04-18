@@ -63,20 +63,19 @@ public:
                 break;
         }
 
+        //Point to Screen center:
         MidWidth = MainWidth = GroundWidth / 2 + 25 + 3;
         MidHigh  = MainHigh = (GroundHigh + 7 + 2) / 2;
 
         //Choose a random direction:
         srand(time(0));
-        int RandNumber = rand() % (7 - 1) + 1;
+        int RandNumber = rand() % (5 - 1) + 1;
         switch(RandNumber)
         {
             case 1: BallDirection = NW;     break;
             case 2: BallDirection = NE;     break;
             case 3: BallDirection = SW;     break;
             case 4: BallDirection = SE;     break;
-            case 5: BallDirection = W ;     break;
-            case 6: BallDirection = E ;     break;
         }
 
         BeforeDirection = BallDirection;
@@ -91,7 +90,7 @@ public:
     void BallMovement(void);
 
     //that controls the ball logic(Score & ball direction):
-    void Logic(int*, int *, int *, int *, int, int);
+    void Logic(int*, int *, int *, int *, int, int, int*);
 
 
 private:
@@ -183,7 +182,7 @@ void Ball::BallMovement(void)
     return;
 }
 
-void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePlayer2, int HighPlayer1, int HighPlayer2)
+void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePlayer2, int HighPlayer1, int HighPlayer2, int* Delay)
 {
     //Thi method controls the Ball logic:
 
@@ -197,7 +196,7 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
         }
     }
 
-    else if(MainHigh == 9)
+    else if(MainHigh == 10)
     {
         switch(BeforeDirection)
         {
@@ -207,8 +206,10 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
     }
 
 
-    else if(MainWidth == 29)
+    else if(MainWidth == 32)
     {
+        Sleep(1000);
+
         *Player2HP -= 1;
         GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
 
@@ -217,12 +218,13 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
         Methods::SetCursor(MidWidth, MidHigh);      cout << (char)219;
 
         MainWidth = MidWidth;       MainHigh = MidHigh;
-
-        Sleep(1000);
+        *Delay -= 5;
     }
 
-    else if(MainWidth == 137)
+    else if(MainWidth == 134)
     {
+        Sleep(1000);
+
         *Player1HP -= 1;
         GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
 
@@ -231,8 +233,7 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
         Methods::SetCursor(MidWidth, MidHigh);      cout << (char)219;
 
         MainWidth = MidWidth;       MainHigh = MidHigh;
-
-        Sleep(1000);
+        *Delay -= 5;
     }
 
     //Check if the ball hit the player:
@@ -254,17 +255,17 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
                     case E:
 
                         //Choose a random direction:
-                        srand(time(0));
+                        srand(time(0) / 2);
                         RandNumber = rand() % (4 - 1) + 1;
                         switch (RandNumber) {
                             case 1:
                                 BallDirection = NW;
                                 break;
                             case 2:
-                                BallDirection = SW;
+                                BallDirection = W;
                                 break;
                             case 3:
-                                BallDirection = W;
+                                BallDirection = SW;
                                 break;
                         }
 
@@ -295,13 +296,13 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
 
                     case W:
                         //Choose a random direction:
-                        srand(time(0));
+                        srand(time(0) / 2);
                         RandNumber = rand() % (4 - 1) + 1;
                         switch(RandNumber)
                         {
                             case 1: BallDirection = NE;     break;
-                            case 2: BallDirection = SE;     break;
-                            case 3:BallDirection = E;       break;
+                            case 2: BallDirection = E;     break;
+                            case 3:BallDirection = SE;       break;
                         }
 
                         break;

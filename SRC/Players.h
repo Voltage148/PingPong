@@ -6,7 +6,7 @@
  *  So this file can control the player and CPU(Computer Player):
  *      Contents:
  *              Player Class : Draw Player, Process Player, Control player input, Control player movement;
- *              ComputerPlayer Class : Draw Body, Process Computer Player, The Computer AI;
+ *              ComputerPlayer Class : Draw Body
  */
 
 #ifndef PLAYERS_H
@@ -69,7 +69,7 @@ class Player
             }
 
             //Set Player Start Drawing Place:
-            StartPlace = Highet;
+            StartPlace = (Highet / 2) - 3 + 7;
             StartWidth = Width;
 
         }
@@ -78,11 +78,11 @@ class Player
 
         //Define Methods:
 
-        //That draws the player Body in ground:
-        void DrawBody(bool);
+            //That draws the player Body in ground:
+            void DrawBody(bool);
 
-        //That controls input and movement:
-        void ControlMovement(char);
+            //That controls input and movement:
+            void ControlMovement(char);
 
 
     private:

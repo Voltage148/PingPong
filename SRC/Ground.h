@@ -30,6 +30,9 @@ class Ground
         //The Methods shows Game Status:
         void ShowInfos(int , int , int, int);
 
+        //This method when a player wins that run:
+        void WinMenu(string Winner);
+
     private:
 
         //Ground Specifications:
@@ -64,6 +67,10 @@ void Ground::DrawGround(bool flag  = true)
             }
 
         }
+
+        //Draw Helps::
+        Methods::SetTextColor(2);   Methods::SetCursor(Horizontal_Start, Highet + Vertical_Start + 6);
+        cout << "W -> UP Player1 | S -> Down Player1 | U -> Up Player2 | J -> Down Player2 | CTRL -> exit from game";
     }
 
     else
@@ -93,5 +100,40 @@ void Ground::ShowInfos(int Player1HP,    int Player2HP,  int ScorePlayer1, int S
     return;
 }
 
+
+void Ground::WinMenu(string Winner)
+{
+
+    //Clear Screen              Set Color                              Set Text Color:
+    system("cls");     system("color 10");          Methods::SetTextColor(24);
+
+    for(int HCounter = 0 ; HCounter < 10 ; HCounter ++)
+    {
+        for(int WCounter = 0 ; WCounter < 67 ; WCounter++)
+        {
+            Methods::SetCursor(WCounter + 45, HCounter + 15);
+
+            if(WCounter > 64 || HCounter > 8){Methods::SetTextColor(16);}
+
+            else{Methods::SetTextColor(24);}
+
+            cout << (char)219;
+        }
+    }
+
+    //Beep:
+
+    Beep(300, 200);
+
+    //Print Texts:
+    Methods::SetTextColor(128);
+
+    Methods::SetCursor(64, 16);     cout << Winner << " is Win!";
+    Methods::SetCursor(47, 18);     cout << "Winner Winner Chicken enar!";
+    Methods::SetCursor(47, 20);     cout << "1 --> Exit from Game:";
+    Methods::SetCursor(47, 21);           system("pause");
+
+    return;
+}
 
 #endif
