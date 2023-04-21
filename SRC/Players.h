@@ -24,8 +24,6 @@ using namespace std;
 class Player
 {
     public:
-
-
         //Constructor:
 
         Player(string Color, int Width, int Highet)
@@ -69,12 +67,11 @@ class Player
             }
 
             //Set Player Start Drawing Place:
-            StartPlace = (Highet / 2) - 3 + 7;
+            StartPlace = Highet / 2;
             StartWidth = Width;
 
         }
 
-        int StartPlace = 0;     int StartWidth = 0;
 
         //Define Methods:
 
@@ -84,11 +81,34 @@ class Player
             //That controls input and movement:
             void ControlMovement(char);
 
+            //Get Methods:
+
+            int GetPlayerHP(void);
+
+            int GetPlayerScore(void);
+
+            int GetPlayerWidth(void);
+
+            int GetPlayerHigh(void);
+
+            //Set Methods:
+
+            void SetPlayerHP(int);
+
+            void SetPlayerScore(int);
+
+            void SetPlayerWidth(int);
+
+            void SetPlayerHigh(int);
+
+
 
     private:
 
         //The Constants vars is here:
-        const int Length = 7;   const int Width = 2;
+        const int Length = 7;   const int Width = 2;     int PlayerHP = 3;      int PlayerScore = 0;
+        
+        int StartPlace = 0;     int StartWidth = 0;
 
         //They are unknown Vars (set by constructor when program running ):
         int ColorNumber = 0;
@@ -165,4 +185,23 @@ void Player::ControlMovement(char Coord)
 
     return;
 }
+
+int Player::GetPlayerHP(void){return PlayerHP;}
+
+int Player::GetPlayerScore(void){return PlayerScore;}
+
+int Player::GetPlayerWidth(void){return StartWidth;}
+
+int Player::GetPlayerHigh(void){return StartPlace;}
+
+
+
+void Player::SetPlayerScore(int Score){PlayerScore = Score;     return;}
+
+void Player::SetPlayerHP(int HP){PlayerHP = HP;     return;}
+
+void Player::SetPlayerWidth(int Width){StartWidth = Width;      return;}
+
+void Player::SetPlayerHigh(int High){StartPlace = High;     return;}
+
 #endif

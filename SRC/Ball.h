@@ -64,8 +64,8 @@ public:
         }
 
         //Point to Screen center:
-        MidWidth = MainWidth = GroundWidth / 2 + 25 + 3;
-        MidHigh  = MainHigh = (GroundHigh + 7 + 2) / 2;
+        MidWidth = MainWidth = GroundWidth / 2;
+        MidHigh  = MainHigh =  GroundHigh /  2;
 
         //Choose a random direction:
         srand(time(0));
@@ -90,8 +90,10 @@ public:
     void BallMovement(void);
 
     //that controls the ball logic(Score & ball direction):
-    void Logic(int*, int *, int *, int *, int, int, int*);
-
+    bool BallLimit_Logic(Player&, Player& ,int&);
+    
+    //that controls player and ball interaction:
+    bool BallInteraction_Logic(Player&, Player&);
 
 private:
 
@@ -182,7 +184,7 @@ void Ball::BallMovement(void)
     return;
 }
 
-void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePlayer2, int HighPlayer1, int HighPlayer2, int* Delay)
+bool Ball::BallLimit_Logic(Player& GamePlayer1, Player& GamePlayer2 ,int& Delay)
 {
     //Thi method controls the Ball logic:
 
@@ -210,31 +212,39 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
     {
         Sleep(1000);
 
-        *Player2HP -= 1;
-        GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
+        GamePlayer2.SetPlayerHP((GamePlayer2.GetPlayerHP() - 1));
 
         Methods::SetCursor(MainWidth, MainHigh);    cout << ' ';
 
         Methods::SetCursor(MidWidth, MidHigh);      cout << (char)219;
 
         MainWidth = MidWidth;       MainHigh = MidHigh;
-        *Delay -= 5;
+        Delay -= 5;
+
+        return true;
     }
 
     else if(MainWidth == 134)
     {
         Sleep(1000);
 
-        *Player1HP -= 1;
-        GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
+        GamePlayer1.SetPlayerHP((GamePlayer1.GetPlayerHP() - 1));
 
         Methods::SetCursor(MainWidth, MainHigh);    cout << ' ';
 
         Methods::SetCursor(MidWidth, MidHigh);      cout << (char)219;
 
         MainWidth = MidWidth;       MainHigh = MidHigh;
-        *Delay -= 5;
+        Delay -= 5;
+
+        return true;
     }
+
+    return false;
+}
+
+bool Ball::BallInteraction_Logic(Player& GamePlayer1, Player& GamePlayer2)
+{
 
     //Check if the ball hit the player:
 
@@ -244,7 +254,7 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
     {
         for(int index = 0 ; index < 7 ;  index ++)
         {
-            if(MainHigh == HighPlayer1 + index)
+            if(MainHigh == (GamePlayer1.GetPlayerHigh() + index))
             {
                 switch (BeforeDirection)
                 {
@@ -276,9 +286,8 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
                         break;
 
                 }
-                *ScorePlayer1 += 1;
-                GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
-                break;
+                GamePlayer1.SetPlayerScore((GamePlayer1.GetPlayerScore() + 10));
+                return true;
             }
 
         }
@@ -288,7 +297,7 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
     {
         for(int index = 0 ; index < 7 ;  index ++)
         {
-            if(MainHigh == HighPlayer2 + index)
+            if(MainHigh == (GamePlayer2.GetPlayerHigh() + index))
             {
                 switch(BeforeDirection)
                 {
@@ -309,14 +318,13 @@ void Ball::Logic(int *Player1HP, int *Player2HP, int *ScorePlayer1, int *ScorePl
 
                     case NW:    BallDirection = NE; break;
                 }
-                *ScorePlayer2 +=1;
-                GroundOb.ShowInfos(*Player1HP, *Player2HP, *ScorePlayer1, *ScorePlayer2);
-                break;
+                GamePlayer2.SetPlayerScore((GamePlayer2.GetPlayerScore() + 10));
+                return true;
             }
         }
     }
 
-    return;
+    return false;
 }
 
 #endif

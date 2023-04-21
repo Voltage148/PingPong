@@ -33,6 +33,10 @@ class Ground
         //This method when a player wins that run:
         void WinMenu(string Winner);
 
+        int GetGroundWidth(void);
+
+        int GetGroundHigh(void);
+
     private:
 
         //Ground Specifications:
@@ -135,5 +139,9 @@ void Ground::WinMenu(string Winner)
 
     return;
 }
+
+int Ground::GetGroundHigh(void){return (Highet + Highet_Thickness + Vertical_Start);}
+
+int Ground::GetGroundWidth(void){return (Width + Width_Thickness + Horizontal_Start);}
 
 #endif

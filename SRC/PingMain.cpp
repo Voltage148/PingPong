@@ -29,8 +29,7 @@ int main(int argc ,char** arvg)
     //The Code:
 
     //Define the base vars:
-    int Player1HP = 3;   int Player2HP = 3;    int ScorePlayer1 = 0;    string Winner = "Nobody";    int ScorePlayer2 = 0;    bool Game = true; //Game is the important var in the program;
-    int Delay = 50;
+    string Winner = "Nobody";  bool Game = true;  int Delay = 45;      bool is_HP_changed = false;        bool is_Score_changed = false;
 
     //Colors:
     string ColorPlayer1 = "Green";      string ColorPlayer2 = "Blue";
@@ -38,30 +37,27 @@ int main(int argc ,char** arvg)
     //Window Setup:
     Methods::FullScreen(true);          Sleep(10);
     Methods::HideScrollBar(true);       Sleep(10);
+    Methods::HideCursor(false);         Sleep(10);
 
     //Set Player Color:
     SelectColor(&ColorPlayer1, &ColorPlayer2);
-
 
     //Define the Objects:
 
     Ground PlayGround;
 
-    Player GamePlayer1(ColorPlayer1, 134, 29);
+    Player GamePlayer1(ColorPlayer1, (PlayGround.GetGroundWidth() - 11), PlayGround.GetGroundHigh());
 
-    Player GamePlayer2(ColorPlayer2, 31,  29);
+    Player GamePlayer2(ColorPlayer2, (PlayGround.GetGroundWidth()  - 114) , PlayGround.GetGroundHigh());
 
-    Ball GameBall("Yellow", 117, 29);
+    Ball GameBall("Yellow", PlayGround.GetGroundWidth(), PlayGround.GetGroundHigh());
 //==================================Start Main Game======================
 
-    //Showing the ground and set the window:
-
-    Methods::HideCursor(false);         Sleep(10);
 
     //Draw Ground, Players, and Ball:
     PlayGround.DrawGround(true);
 
-    PlayGround.ShowInfos(Player1HP, Player2HP, 0, 0);
+    PlayGround.ShowInfos(GamePlayer1.GetPlayerHP(), GamePlayer2.GetPlayerHP(), GamePlayer1.GetPlayerScore(), GamePlayer2.GetPlayerScore());
 
     GamePlayer1.DrawBody(true);
     GamePlayer2.DrawBody(true);
@@ -73,9 +69,9 @@ int main(int argc ,char** arvg)
     while(Game)
     {
         //Player logic:
-             if(Player1HP == 0){ Game = false;       Winner = "Player 2";   PlayGround.WinMenu(Winner);}
+             if(GamePlayer1.GetPlayerHP() == 0){ Game = false;       Winner = "Player 2";   PlayGround.WinMenu(Winner);}
 
-        else if(Player2HP == 0){ Game = false;  Winner = "Player 1";   PlayGround.WinMenu(Winner);}
+        else if(GamePlayer2.GetPlayerHP() == 0){ Game = false;  Winner = "Player 1";   PlayGround.WinMenu(Winner);}
 
         //KeyBoard input control:
 
@@ -93,13 +89,14 @@ int main(int argc ,char** arvg)
 
         GameBall.BallMovement();
 
-        GameBall.Logic(&Player1HP,
-                       &Player2HP,
-                       &ScorePlayer1,
-                       &ScorePlayer2,
-                       GamePlayer1.StartPlace,
-                       GamePlayer2.StartPlace,
-                       &Delay);
+        is_HP_changed = GameBall.BallLimit_Logic(GamePlayer1, GamePlayer2, Delay);
+
+        is_Score_changed = GameBall.BallInteraction_Logic(GamePlayer1, GamePlayer2);
+
+
+        if(is_HP_changed || is_Score_changed){   
+           PlayGround.ShowInfos(GamePlayer1.GetPlayerHP(), GamePlayer2.GetPlayerHP(), GamePlayer1.GetPlayerScore(), GamePlayer2.GetPlayerScore());  
+           is_Score_changed = is_HP_changed = false;}
 
         //wait:
         Sleep(Delay);
